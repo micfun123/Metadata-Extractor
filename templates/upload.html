@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Upload File</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <h1>Upload File</h1>
+
+  
+  <p class="site-description">Welcome to the Metadata Extractor!</p>
+  <p class="site-description">This simple web tool allows you to upload a file and extract its metadata using ExifTool. Supported file types include images and PDFS</p>
+  <p class="site-description">To get started, click the "Choose a file" button below and select a file from your computer. Then click the "Upload" button to upload the file and extract its metadata.</p>
+
+  <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+    <label class="file-label" for="photo-input">Choose a file</label>
+    <input class="file-input" id="photo-input" type="file" name="photo">
+    <input class="upload-btn" type="submit" value="Upload">
+  </form>
+
+  {% if metadata %}
+  <h2>Metadata</h2>
+  <table class="metadata-table">
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+    {% for key, value in metadata.items() %}
+      <tr>
+        <td>{{ key }}</td>
+        <td>{{ value }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+{% if error %}
+  <p class="unsupported-msg">{{ error }}</p>
+{% endif %}
+</body>
+</html>
